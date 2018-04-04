@@ -24,6 +24,25 @@ DIRECTORY STRUCTURE
 
 * database config/db.php
 
+Gii Tool
+--------
+Tool can generate code for Models, CRUD, Controllers, Form, Module, Extension, and many more.
+You can restrict tool, by going to file, i.e. config/web.php 
+By default it is only available in development mode, but you can restrict using allowedIPs flag.
+```
+siteUrl/index.php?r=gii
+```
+
+* passing values from controller to view  
+```php
+//controller
+return $this->render('viewname',['variable'=>$value]);
+
+//view
+echo $variable;
+```
+
+
 REQUIREMENTS
 ------------
 
