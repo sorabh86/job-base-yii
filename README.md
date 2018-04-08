@@ -41,7 +41,11 @@ return $this->render('viewname',['variable'=>$value]);
 //view
 echo $variable;
 ```
-
+Getting baseUrl
+```
+Yii::$app->homeUrl;
+Url::base();
+```
 
 REQUIREMENTS
 ------------

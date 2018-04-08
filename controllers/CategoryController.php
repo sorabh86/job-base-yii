@@ -3,13 +3,13 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
+// use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
+// use yii\filters\VerbFilter;
 use yii\data\Pagination;
 use app\models\Category;
 
-class CategoryController extends \yii\web\Controller
+class CategoryController extends Controller
 {
     public function actionIndex()
     {
@@ -26,13 +26,33 @@ class CategoryController extends \yii\web\Controller
     		->limit($pagination->limit)
     		->all();
 
-        return $this->render('index', ['categories' => $categories, 'pagination' => $pagination]);
+        return $this->render('index', [
+        	'categories' => $categories, 
+        	'pagination' => $pagination
+        ]);
     }
 
     public function actionCreate()
-    {
-        return $this->render('create');
-    }
+	{
+	    $category = new Category();
 
+	    if ($category->load(Yii::$app->request->post())) {
+	        // validation
+	        if ($category->validate()) {
+	        	//save record
+	        	$category->save();
+
+	        	// send message
+	        	Yii::$app->getSession()->setFlash('success', 'New Category Added');
+
+	            // redirect
+	            return $this->redirect(Yii::$app->homeUrl.'?r=category');
+	        }
+	    }
+
+	    return $this->render('create', [
+	        'category' => $category,
+	    ]);
+	}
 
 }

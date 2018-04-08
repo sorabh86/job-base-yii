@@ -39,8 +39,8 @@ class Job extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'user_id', 'title', 'description', 'type', 'requirements', 'salary_range', 'city', 'state', 'zipcode', 'contact_email', 'contact_phone'], 'required'],
-            [['category_id', 'user_id'], 'integer'],
+            [['category_id', /*'user_id',*/ 'title', 'description', 'type', 'requirements', 'salary_range', 'city', 'state', 'zipcode', 'contact_email', 'contact_phone'], 'required'],
+            [['category_id', /*'user_id'*/], 'integer'],
             [['description'], 'string'],
             [['create_date'], 'safe'],
             [['title', 'type', 'requirements', 'salary_range', 'city', 'state', 'zipcode', 'contact_email', 'contact_phone'], 'string', 'max' => 255],
@@ -70,5 +70,16 @@ class Job extends \yii\db\ActiveRecord
             'is_published' => 'Is Published',
             'create_date' => 'Create Date',
         ];
+    }
+
+    /* define relationship between tables category->id is this->category_id */
+    public function getCategory () {
+        return $this->hasOne(Category::className(), ['id'=>'category_id']);
+    }
+
+    /* before save */
+    public function beforeSave($insert) {
+        $this->user_id = 1;
+        return parent::beforeSave($insert);
     }
 }
