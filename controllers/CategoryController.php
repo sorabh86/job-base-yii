@@ -3,14 +3,33 @@
 namespace app\controllers;
 
 use Yii;
-// use yii\filters\AccessControl;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 // use yii\filters\VerbFilter;
 use yii\data\Pagination;
 use app\models\Category;
 
-class CategoryController extends Controller
-{
+class CategoryController extends Controller {
+
+	/**
+     *   Access Control
+    **/
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create'],
+                'rules' => [
+                	[
+	                    'actions' => ['create'],
+	                    'allow' => true,
+	                    'roles' => ['@']
+	                ]
+                ]
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
     	// create query

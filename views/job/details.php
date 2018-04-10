@@ -3,10 +3,13 @@
 <h2 class="page-header">
 	<?php echo $job->title; ?> 
 	<small>in <?php echo $job->city.', '.$job->state; ?></small>
-	<span class="pull-right">
-		<a href="<?= Yii::$app->homeUrl ?>?r=job/edit&id=<?= $job->id ?>" class="btn btn-default">Edit</a>
-		<a href="<?= Yii::$app->homeUrl ?>?r=job/delete&id=<?= $job->id ?>" class="btn btn-danger">Delete</a>
-	</span>
+
+	<?php if(Yii::$app->user->identity->id == $job->user_id) : ?>
+		<span class="pull-right">
+			<a href="<?= Yii::$app->homeUrl ?>?r=job/edit&id=<?= $job->id ?>" class="btn btn-default">Edit</a>
+			<a href="<?= Yii::$app->homeUrl ?>?r=job/delete&id=<?= $job->id ?>" class="btn btn-danger">Delete</a>
+		</span>
+	<?php endif; ?>
 </h2>
 
 <?php if(!empty($job->description)) : ?>

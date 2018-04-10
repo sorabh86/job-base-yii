@@ -20,11 +20,13 @@ class JobController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['create', 'edit', 'delete'],
-                // 'rules' => [
-                //     // 'actions' => ['delete'],
-                //     // 'allow' => true,
-                //     //'roles' => [''],
-                // ]
+                'rules' => [
+                    [
+                        'actions' => ['create', 'edit', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ]
             ],
         ];
     }
@@ -87,6 +89,12 @@ class JobController extends Controller
     {
         $job = Job::findOne($id);
 
+        // Check for owner by comparing with current login id to user id
+        if(Yii::$app->user->identity->id != $job->user_id) {
+            // Redirect
+            return $this->redirect(Yii::$app->homeUrl.'?r=job');            
+        }
+        
         $job->delete();
 
         // Show message
@@ -99,6 +107,12 @@ class JobController extends Controller
     public function actionEdit($id)
     {
         $job = Job::findOne($id);
+
+        // Check for owner by comparing with current login id to user id
+        if(Yii::$app->user->identity->id != $job->user_id) {
+            // Redirect
+            return $this->redirect(Yii::$app->homeUrl.'?r=job');            
+        }
 
         if ($job->load(Yii::$app->request->post())) {
             if ($job->validate()) {

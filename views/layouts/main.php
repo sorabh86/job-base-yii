@@ -20,7 +20,8 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <!-- <?= Html::encode($this->title) ?> -->
+    <title>Job Board</title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -28,43 +29,43 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    NavBar::begin([
-        'brandLabel' => 'Job Board',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-left'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Categories', 'url' => ['/category/index']],
-            ['label' => 'Jobs', 'url' => ['/job/index']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            ),
-            ! Yii::$app->user->id ? (
-                ['label' => 'Register', 'url' => ['/user/register']]
-            ) : ( '' )
-        ],
-    ]);
-    NavBar::end();
+        NavBar::begin([
+            'brandLabel' => 'Job Board',
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar-default navbar-fixed-top',
+            ],
+        ]);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-left'],
+            'items' => [
+                ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'Categories', 'url' => ['/category/index']],
+                ['label' => 'Jobs', 'url' => ['/job/index']],
+                ['label' => 'Contact', 'url' => ['/site/contact']],
+            ],
+        ]);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                Yii::$app->user->isGuest ? (
+                    ['label' => 'Login', 'url' => ['/site/login']]
+                ) : (
+                    '<li>'
+                    . Html::beginForm(['/site/logout'], 'post')
+                    . Html::submitButton(
+                        'Logout (' . Yii::$app->user->identity->username . ')',
+                        ['class' => 'btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>'
+                ),
+                ! Yii::$app->user->id ? (
+                    ['label' => 'Register', 'url' => ['/user/register']]
+                ) : ( '' )
+            ],
+        ]);
+        NavBar::end();
     ?>
 
     <div class="container">
