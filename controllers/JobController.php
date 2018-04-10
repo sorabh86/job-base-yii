@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\data\Pagination;
 use app\models\Category;
 use app\models\Job;
@@ -11,6 +12,23 @@ use app\models\Job;
 
 class JobController extends Controller
 {
+    /**
+     *   Access Control
+    **/
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'edit', 'delete'],
+                // 'rules' => [
+                //     // 'actions' => ['delete'],
+                //     // 'allow' => true,
+                //     //'roles' => [''],
+                // ]
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         // create query

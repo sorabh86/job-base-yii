@@ -58,7 +58,10 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
+            ! Yii::$app->user->id ? (
+                ['label' => 'Register', 'url' => ['/user/register']]
+            ) : ( '' )
         ],
     ]);
     NavBar::end();

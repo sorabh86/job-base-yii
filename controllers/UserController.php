@@ -2,7 +2,11 @@
 
 namespace app\controllers;
 
-class UserController extends \yii\web\Controller
+use Yii;
+use yii\web\Controller;
+use app\models\User;
+
+class UserController extends Controller
 {
     public function actionLogin()
     {
@@ -11,7 +15,23 @@ class UserController extends \yii\web\Controller
 
     public function actionRegister()
     {
-        return $this->render('register');
+        $user = new User();
+
+        if ($user->load(Yii::$app->request->post())) {
+            if ($user->validate()) {
+                // save users
+            	$user->save();
+
+            	// show message
+            	Yii::$app->getSession()->setFlash('success','You are registered, Please login');
+
+            	return $this->redirect(Yii::$app->homeUrl.'?r=site/login');
+            }
+        }
+
+        return $this->render('register', [
+            'user' => $user,
+        ]);
     }
 
 }
